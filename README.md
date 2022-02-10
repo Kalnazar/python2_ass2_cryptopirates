@@ -32,6 +32,4 @@ Outputs will be like these:
 ```bash
 
 ```
-Our tokens saved in database
-## License
-[MIT](https://choosealicense.com/licenses/mit/)
+
