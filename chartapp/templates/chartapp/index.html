@@ -1,0 +1,84 @@
+{% extends 'partials/base.html' %}
+
+{% block content %}
+
+    <div class="row">
+        <div id="barChart" class="chartBox p-5 m-10 border-2 border-white rounded-lg bg-white">
+            <h1 class="text-center text-xl font-bold mb-3">Bar Chart</h1>
+            <canvas id="myChart"></canvas>
+        </div>
+
+        <div id="linearChart" class="chartBox p-5 m-10 border-2 border-white rounded-lg bg-white">
+            <h1 class="text-center text-xl font-bold mb-3">Linear Chart</h1>
+            <canvas id="lineChart"></canvas>
+        </div>
+
+        <div id="pie" class="chartBox p-5 m-10 border-2 border-white rounded-lg bg-white">
+            <h1 class="text-center text-xl font-bold mb-3">Pie Chart</h1>
+            <canvas id="pieChart"></canvas>
+        </div>
+        <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+        <script>
+            const data = {
+                labels: [{% for item in query_results %} '{{ item.address }}', {% endfor %}],
+                datasets: [{
+                    label: '# of Votes',
+                    data: [{% for item in query_results %} {{ item.balance }}, {% endfor %}],
+                    backgroundColor: [
+                        'rgba(255, 99, 132, 0.2)',
+                        'rgba(54, 162, 235, 0.2)',
+                        'rgba(255, 206, 86, 0.2)',
+                        'rgba(75, 192, 192, 0.2)',
+                        'rgba(153, 102, 255, 0.2)',
+                        'rgba(255, 159, 64, 0.2)'
+                    ],
+                    borderColor: [
+                        'rgba(255, 99, 132, 1)',
+                        'rgba(54, 162, 235, 1)',
+                        'rgba(255, 206, 86, 1)',
+                        'rgba(75, 192, 192, 1)',
+                        'rgba(153, 102, 255, 1)',
+                        'rgba(255, 159, 64, 1)'
+                    ],
+                    borderWidth: 1
+                }]
+            };
+            const config = {
+                type: 'line',
+                data,
+                options: {
+                    scales: {
+                        y: {
+                            beginAtZero: true
+                        }
+                    }
+                }
+            };
+            const myChart = new Chart(document.getElementById('myChart'), config);
+            const config2 = {
+                type: 'bar',
+                data,
+                options: {
+                    scales: {
+                        y: {
+                            beginAtZero: true
+                        }
+                    }
+                }
+            };
+            const lineChart = new Chart(document.getElementById('lineChart'), config2);
+            const config3 = {
+                type: 'doughnut',
+                data,
+                options: {
+                    scales: {
+                        y: {
+                            beginAtZero: true
+                        }
+                    }
+                }
+            };
+            const pieChart = new Chart(document.getElementById('pieChart'), config3);
+        </script>
+    </div>
+{% endblock %}
